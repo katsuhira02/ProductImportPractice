@@ -1,0 +1,38 @@
+@using ProductImportPractice.Models
+@{
+    ViewData["Title"] = "Импорт товаров";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm mt-5">
+            <div class="card-header bg-white py-3">
+                <h4 class="mb-0">Загрузка CSV файла</h4>
+            </div>
+            <div class="card-body p-4">
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger mb-4">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <form asp-action="Import" method="post" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <label for="file" class="form-label">Выберите CSV файл</label>
+                        <input type="file" name="file" id="file" class="form-control" accept=".csv" required />
+                        <div class="form-text mt-2">
+                            Файл должен содержать столбцы: <strong>@string.Join(AppConstants.Csv.Delimiter, AppConstants.Csv.RequiredHeaders)</strong>. 
+                            Разделитель — точка с запятой (@AppConstants.Csv.Delimiter).
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Импортировать</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Вернуться к списку</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

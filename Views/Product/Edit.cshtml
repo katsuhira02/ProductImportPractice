@@ -1,0 +1,44 @@
+@model ProductImportPractice.Models.Product
+@{
+    ViewData["Title"] = "Редактирование товара";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm mt-5">
+            <div class="card-header">
+                <h5 class="mb-0">Редактирование товара</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    
+                    <div class="mb-3">
+                        <label asp-for="Sku" class="form-label">SKU</label>
+                        <input asp-for="Sku" class="form-control" readonly />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">Название</label>
+                        <input asp-for="Name" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Price" class="form-label">Цена</label>
+                        <input asp-for="Price" type="number" step="0.01" class="form-control" required />
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Quantity" class="form-label">Количество</label>
+                        <input asp-for="Quantity" type="number" class="form-control" required />
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
