@@ -57,7 +57,7 @@ project.fragment.lock.json
 artifacts/
 
 # ASP.NET Core
-wwwroot/lib/
+# wwwroot/lib/
 
 # Examples (Optional, but usually we don't want to ignore them if they are small)
 # /examples_csv/products_export_*.csv
