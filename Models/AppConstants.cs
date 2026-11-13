@@ -4,15 +4,25 @@ namespace ProductImportPractice.Models
     {
         public static class Csv
         {
-            public const string Delimiter = ";";
+            public const string Delimiter = ",";
             public const string Extension = ".csv";
             
-            public const string HeaderSku = "Sku";
-            public const string HeaderName = "Name";
-            public const string HeaderPrice = "Price";
-            public const string HeaderQuantity = "Quantity";
+            public const string HeaderSku = "sku";
+            public const string HeaderName = "name";
+            public const string HeaderDescription = "description";
+            public const string HeaderPrice = "price";
+            public const string HeaderCurrency = "currency";
+            public const string HeaderCategoryName = "category_name";
+            public const string HeaderStock = "stock";
+            public const string HeaderImageUrl = "image_url";
+            public const string HeaderIsActive = "is_active";
 
-            public static readonly string[] RequiredHeaders = { HeaderSku, HeaderName, HeaderPrice, HeaderQuantity };
+            public static readonly string[] RequiredHeaders = 
+            { 
+                HeaderSku, HeaderName, HeaderDescription, HeaderPrice, 
+                HeaderCurrency, HeaderCategoryName, HeaderStock, 
+                HeaderImageUrl, HeaderIsActive 
+            };
         }
 
         public static class Messages
@@ -23,9 +33,10 @@ namespace ProductImportPractice.Models
             public const string EmptySku = "SKU не может быть пустым";
             public const string EmptyName = "Название не может быть пустым";
             public const string InvalidPriceFormat = "Некорректный формат цены";
-            public const string NegativePrice = "Цена не может быть отрицательной";
-            public const string InvalidQuantityFormat = "Некорректный формат количества";
-            public const string NegativeQuantity = "Количество не может быть отрицательным";
+            public const string PriceMustBePositive = "Цена должна быть строго больше 0";
+            public const string InvalidStockFormat = "Некорректный формат остатка";
+            public const string NegativeStock = "Остаток не может быть отрицательным";
+            public const string InvalidIsActiveFormat = "Поле is_active должно быть true/false/1/0";
             public const string DuplicateSkuInFile = "Дубликат SKU в файле: {0}";
             public const string DuplicateSkuInRepository = "Товар с SKU {0} уже существует в системе";
             

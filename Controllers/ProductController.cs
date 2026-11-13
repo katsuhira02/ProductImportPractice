@@ -53,9 +53,18 @@ namespace ProductImportPractice.Controllers
         [HttpPost]
         public IActionResult Edit(Product product)
         {
-            if (product.Price < 0 || product.Quantity < 0)
+            if (product.Price <= 0)
             {
-                ModelState.AddModelError("", "Цена и количество не могут быть отрицательными.");
+                ModelState.AddModelError("Price", AppConstants.Messages.PriceMustBePositive);
+            }
+
+            if (product.Stock < 0)
+            {
+                ModelState.AddModelError("Stock", AppConstants.Messages.NegativeStock);
+            }
+
+            if (!ModelState.IsValid)
+            {
                 return View(product);
             }
 

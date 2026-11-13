@@ -24,13 +24,43 @@
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Price" class="form-label">Цена</label>
-                        <input asp-for="Price" type="number" step="0.01" class="form-control" required />
+                        <label asp-for="Description" class="form-label">Описание</label>
+                        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Price" class="form-label">Цена</label>
+                            <input asp-for="Price" type="number" step="0.01" class="form-control" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Currency" class="form-label">Валюта</label>
+                            <input asp-for="Currency" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CategoryName" class="form-label">Категория</label>
+                        <input asp-for="CategoryName" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Stock" class="form-label">Остаток</label>
+                        <input asp-for="Stock" type="number" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ImageUrl" class="form-label">URL изображения</label>
+                        <input asp-for="ImageUrl" class="form-control" />
                     </div>
 
                     <div class="mb-4">
-                        <label asp-for="Quantity" class="form-label">Количество</label>
-                        <input asp-for="Quantity" type="number" class="form-control" required />
+                        <div class="form-check">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" id="isActiveCheck">
+                            <label class="form-check-label" for="isActiveCheck">
+                                Активен
+                            </label>
+                        </div>
                     </div>
 
                     <div class="d-grid gap-2">

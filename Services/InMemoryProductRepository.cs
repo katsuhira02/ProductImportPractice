@@ -47,10 +47,15 @@ namespace ProductImportPractice.Services
             var existing = _products.FirstOrDefault(p => p.Id == product.Id);
             if (existing != null)
             {
-                existing.Price = product.Price;
-                existing.Quantity = product.Quantity;
-                existing.Name = product.Name;
                 existing.Sku = product.Sku;
+                existing.Name = product.Name;
+                existing.Description = product.Description;
+                existing.Price = product.Price;
+                existing.Currency = product.Currency;
+                existing.CategoryName = product.CategoryName;
+                existing.Stock = product.Stock;
+                existing.ImageUrl = product.ImageUrl;
+                existing.IsActive = product.IsActive;
             }
         }
     }

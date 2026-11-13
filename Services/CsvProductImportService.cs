@@ -68,14 +68,29 @@ namespace ProductImportPractice.Services
             foreach (var product in products)
             {
                 var line = string.Join(AppConstants.Csv.Delimiter,
-                    product.Sku,
-                    product.Name,
+                    EscapeCsv(product.Sku),
+                    EscapeCsv(product.Name),
+                    EscapeCsv(product.Description),
                     product.Price.ToString(CultureInfo.InvariantCulture),
-                    product.Quantity.ToString());
+                    EscapeCsv(product.Currency),
+                    EscapeCsv(product.CategoryName),
+                    product.Stock.ToString(),
+                    EscapeCsv(product.ImageUrl),
+                    product.IsActive.ToString().ToLower());
                 sb.AppendLine(line);
             }
 
             return Encoding.UTF8.GetBytes(sb.ToString());
+        }
+
+        private string EscapeCsv(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return string.Empty;
+            if (value.Contains(",") || value.Contains("\"") || value.Contains("\n"))
+            {
+                return $"\"{value.Replace("\"", "\"\"")}\"";
+            }
+            return value;
         }
 
         private bool ValidateHeaders(string[] headers, ImportResult result)
@@ -101,8 +116,13 @@ namespace ProductImportPractice.Services
         {
             var sku = GetValue(values, headers, AppConstants.Csv.HeaderSku);
             var name = GetValue(values, headers, AppConstants.Csv.HeaderName);
+            var description = GetValue(values, headers, AppConstants.Csv.HeaderDescription);
             var priceStr = GetValue(values, headers, AppConstants.Csv.HeaderPrice);
-            var quantityStr = GetValue(values, headers, AppConstants.Csv.HeaderQuantity);
+            var currency = GetValue(values, headers, AppConstants.Csv.HeaderCurrency);
+            var categoryName = GetValue(values, headers, AppConstants.Csv.HeaderCategoryName);
+            var stockStr = GetValue(values, headers, AppConstants.Csv.HeaderStock);
+            var imageUrl = GetValue(values, headers, AppConstants.Csv.HeaderImageUrl);
+            var isActiveStr = GetValue(values, headers, AppConstants.Csv.HeaderIsActive);
 
             if (string.IsNullOrWhiteSpace(sku))
             {
@@ -123,21 +143,36 @@ namespace ProductImportPractice.Services
                 return;
             }
 
-            if (price < 0)
+            if (price <= 0)
             {
-                result.Errors.Add(new ImportError { LineNumber = lineNumber, Message = AppConstants.Messages.NegativePrice });
+                result.Errors.Add(new ImportError { LineNumber = lineNumber, Message = AppConstants.Messages.PriceMustBePositive });
                 return;
             }
 
-            if (!int.TryParse(quantityStr, out int quantity))
+            if (!int.TryParse(stockStr, out int stock))
             {
-                result.Errors.Add(new ImportError { LineNumber = lineNumber, Message = AppConstants.Messages.InvalidQuantityFormat });
+                result.Errors.Add(new ImportError { LineNumber = lineNumber, Message = AppConstants.Messages.InvalidStockFormat });
                 return;
             }
 
-            if (quantity < 0)
+            if (stock < 0)
             {
-                result.Errors.Add(new ImportError { LineNumber = lineNumber, Message = AppConstants.Messages.NegativeQuantity });
+                result.Errors.Add(new ImportError { LineNumber = lineNumber, Message = AppConstants.Messages.NegativeStock });
+                return;
+            }
+
+            bool isActive;
+            if (isActiveStr.Equals("true", StringComparison.OrdinalIgnoreCase) || isActiveStr == "1")
+            {
+                isActive = true;
+            }
+            else if (isActiveStr.Equals("false", StringComparison.OrdinalIgnoreCase) || isActiveStr == "0")
+            {
+                isActive = false;
+            }
+            else
+            {
+                result.Errors.Add(new ImportError { LineNumber = lineNumber, Message = AppConstants.Messages.InvalidIsActiveFormat });
                 return;
             }
 
@@ -158,8 +193,13 @@ namespace ProductImportPractice.Services
             {
                 Sku = sku,
                 Name = name,
+                Description = description,
                 Price = price,
-                Quantity = quantity
+                Currency = string.IsNullOrWhiteSpace(currency) ? "RUB" : currency,
+                CategoryName = string.IsNullOrWhiteSpace(categoryName) ? "Без категории" : categoryName,
+                Stock = stock,
+                ImageUrl = imageUrl,
+                IsActive = isActive
             });
         }
 

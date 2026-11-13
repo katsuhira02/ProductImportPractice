@@ -1,6 +1,6 @@
-Sku;Name;Price;Quantity
-PRD-001;Процессор Intel Core i7;350.00;10
-PRD-002;Материнская плата Z790;210.50;15
-PRD-003;Оперативная память 32GB;120.00;25
-PRD-004;SSD Накопитель 1TB;85.99;40
-PRD-005;Видеокарта RTX 4070;650.00;8
+sku,name,description,price,currency,category_name,stock,image_url,is_active
+1001,Ноутбук Lenovo IdeaPad 3,Бюджетный ноутбук,45990,RUB,Компьютеры,5,/images/laptop.jpg,true
+1002,Мышь беспроводная,Оптическая мышь 1600 DPI,1200,RUB,Периферия,50,/images/mouse.jpg,1
+1003,Клавиатура Механическая,RGB подсветка синие свитчи,3500,RUB,Периферия,15,,true
+1004,Монитор 27 дюймов,IPS матрица 144Гц,22000,RUB,Мониторы,7,/images/monitor.jpg,0
+1005,Коврик для мыши,Размер XL 900x400,900,,Аксессуары,100,,false

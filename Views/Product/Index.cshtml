@@ -28,8 +28,10 @@
                     <tr>
                         <th>SKU</th>
                         <th>Название</th>
+                        <th>Категория</th>
                         <th class="text-end">Цена</th>
-                        <th class="text-end">Количество</th>
+                        <th class="text-end">Остаток</th>
+                        <th class="text-center">Активен</th>
                         <th class="text-center" style="width: 100px;">Действия</th>
                     </tr>
                 </thead>
@@ -37,7 +39,7 @@
                     @if (!Model.Any())
                     {
                         <tr>
-                            <td colspan="5" class="text-center py-4 text-muted">
+                            <td colspan="7" class="text-center py-4 text-muted">
                                 Товары не найдены. Пожалуйста, выполните импорт.
                             </td>
                         </tr>
@@ -48,9 +50,26 @@
                         {
                             <tr>
                                 <td>@product.Sku</td>
-                                <td>@product.Name</td>
-                                <td class="text-end">@product.Price.ToString("C2")</td>
-                                <td class="text-end">@product.Quantity</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                        {
+                                            <img src="@product.ImageUrl" alt="@product.Name" class="me-2 rounded" style="width: 32px; height: 32px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/32'">
+                                        }
+                                        <div>
+                                            <div class="fw-bold">@product.Name</div>
+                                            <small class="text-muted d-block text-truncate" style="max-width: 200px;">@product.Description</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@product.CategoryName</td>
+                                <td class="text-end">@product.Price.ToString("N2") @product.Currency</td>
+                                <td class="text-end">@product.Stock</td>
+                                <td class="text-center">
+                                    <span class="badge @(product.IsActive ? "bg-success" : "bg-secondary")">
+                                        @(product.IsActive ? "Да" : "Нет")
+                                    </span>
+                                </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-1">
                                         <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary" title="Редактировать">
